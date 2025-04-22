@@ -1,0 +1,139 @@
+algoritmo ColocarQuadro
+
+// Declaração de variáveis
+var
+   quadro: texto
+   parede: texto
+   localizacao_desejada: texto
+   ferramenta_medicao: texto
+   ferramenta_furo: texto
+   material_fixacao: texto
+   nivel_bolha: texto
+   lapis: texto
+   altura_olhos: real
+   altura_desejada_centro: real
+   distancia_topo_centro: real
+   marca_superior: real
+   marca_inferior: real
+   ponto_furo: real
+   furadeira_ligada: booleano
+   furo_feito: booleano
+   material_inserido: booleano
+   quadro_pendurado: booleano
+
+inicio
+
+   // 1. Identificar o quadro e a parede
+   escreva("Qual quadro você deseja pendurar? ")
+   leia(quadro)
+   escreva("Em qual parede você irá pendurá-lo? ")
+   leia(parede)
+
+   // 2. Escolher a localização desejada
+   escreva("Onde você gostaria que o centro do quadro ficasse (ex: 'acima do sofá', 'na altura dos olhos')? ")
+   leia(localizacao_desejada)
+
+   // 3. Pegar as ferramentas necessárias
+   escreva("Pegue uma fita métrica ou trena (digite 'trena'): ")
+   leia(ferramenta_medicao)
+   escreva("Pegue uma furadeira (se necessário, digite 'furadeira'): ")
+   leia(ferramenta_furo)
+   escreva("Pegue o material de fixação adequado (prego ou parafuso e bucha, digite 'prego' ou 'parafuso'): ")
+   leia(material_fixacao)
+   escreva("Pegue um nível de bolha (digite 'nivel'): ")
+   leia(nivel_bolha)
+   escreva("Pegue um lápis (digite 'lapis'): ")
+   leia(lapis)
+
+   // 4. Determinar a altura desejada para o centro do quadro
+   se localizacao_desejada = "na altura dos olhos" entao
+      escreva("Qual é a altura aproximada dos seus olhos em relação ao chão (em metros)? ")
+      leia(altura_olhos)
+      altura_desejada_centro <- altura_olhos
+   senao
+      escreva("Qual a altura desejada para o centro do quadro em relação ao chão (em metros)? ")
+      leia(altura_desejada_centro)
+   fimse
+
+   // 5. Medir a distância do topo do quadro até o centro
+   escreva("Com a trena, meça a distância do topo do quadro até o centro onde o pendurador está localizado (em metros): ")
+   leia(distancia_topo_centro)
+
+   // 6. Calcular a marca superior na parede
+   marca_superior <- altura_desejada_centro - distancia_topo_centro
+   escreva("Marque na parede, com o lápis, um ponto na altura de ", marca_superior:8:2, " metros a partir do chão.\n")
+
+   // 7. (Opcional) Calcular a marca inferior se precisar de dois pontos de fixação
+   se material_fixacao = "parafuso" entao
+      // Assumindo que o pendurador é centralizado verticalmente
+      marca_inferior <- altura_desejada_centro + distancia_topo_centro
+      escreva("Se o quadro tiver dois pontos de fixação verticais, marque outro ponto na altura de ", marca_inferior:8:2, " metros a partir do chão.\n")
+   fimse
+
+   // 8. Posicionar o nível de bolha na marca superior (ou entre as marcas)
+   escreva("Posicione o nível de bolha horizontalmente na marca que você fez.\n")
+
+   // 9. Ajustar a marca para garantir que esteja nivelada
+   escreva("Ajuste a posição da marca até que a bolha esteja no centro do nível.\n")
+
+   // 10. Preparar para furar (se necessário)
+   se ferramenta_furo = "furadeira" e material_fixacao = "parafuso" entao
+      escreva("Posicione a ponta da furadeira na marca nivelada.\n")
+      furadeira_ligada <- falso
+      escreva("Ligue a furadeira (digite 'sim' para ligar): ")
+      leia(furadeira_ligada)
+
+      se furadeira_ligada = verdadeiro entao
+         escreva("Fure a parede na marca, na profundidade adequada para a bucha.\n")
+         furo_feito <- verdadeiro
+      senao
+         escreva("A furadeira não foi ligada. Não será possível furar.\n")
+         furo_feito <- falso
+      fimse
+   senao se material_fixacao = "prego" entao
+      escreva("Posicione o prego na marca nivelada.\n")
+      escreva("Com um martelo (não listado nas ferramentas), bata o prego na parede.\n")
+      furo_feito <- verdadeiro // Assumindo que pregar cria um "furo" para fixação
+   senao
+      furo_feito <- verdadeiro // Se não precisa furar (ex: fita adesiva), considera o ponto pronto
+   fimse
+
+   // 11. Inserir o material de fixação
+   se furo_feito = verdadeiro entao
+      se material_fixacao = "parafuso" entao
+         escreva("Insira a bucha no furo.\n")
+         escreva("Parafuse o parafuso na bucha, deixando uma parte para pendurar o quadro.\n")
+         material_inserido <- verdadeiro
+      senao se material_fixacao = "prego" entao
+         material_inserido <- verdadeiro // O prego já está inserido
+      senao
+         material_inserido <- verdadeiro // Se não precisa furar, o material (ex: fita) já está pronto
+      fimse
+   senao
+      escreva("Não foi possível inserir o material de fixação pois o furo não foi feito.\n")
+      material_inserido <- falso
+   fimse
+
+   // 12. Pendurar o quadro
+   se material_inserido = verdadeiro entao
+      escreva("Com cuidado, pendure o '", quadro, "' no prego ou parafuso.\n")
+      quadro_pendurado <- verdadeiro
+   senao
+      escreva("Não foi possível pendurar o quadro pois o material de fixação não foi inserido.\n")
+      quadro_pendurado <- falso
+   fimse
+
+   // 13. Verificar se o quadro está reto
+   se quadro_pendurado = verdadeiro e nivel_bolha = "nivel" entao
+      escreva("Use o nível de bolha novamente, colocando-o sobre o topo do quadro.\n")
+      escreva("Verifique se a bolha está no centro. Se não estiver, ajuste o quadro cuidadosamente.\n")
+   fimse
+
+   // 14. Concluir
+   se quadro_pendurado = verdadeiro entao
+      escreva("O quadro '", quadro, "' foi pendurado com sucesso na parede '", parede, "'!\n")
+   senao
+      escreva("Não foi possível pendurar o quadro '", quadro, "' na parede '", parede, "'.\n")
+   fimse
+
+fimalgoritmo
