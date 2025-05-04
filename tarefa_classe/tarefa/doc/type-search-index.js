@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"br.tarefa.classe","l":"Cadastrar"},{"p":"br.tarefa.classe","l":"Cliente"},{"p":"br.tarefa.classe","l":"Endereco"},{"p":"br.tarefa.classe","l":"Incluir"},{"p":"br.tarefa.classe","l":"Sexo"}];updateSearchResults();
